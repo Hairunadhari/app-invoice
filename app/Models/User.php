@@ -21,13 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'level',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    public function keranjang(){
+        return $this->hasMany(Keranjang::class);
+    }
+
     protected $hidden = [
         'password',
         'remember_token',
