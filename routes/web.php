@@ -1,12 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\PesananController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TagihanController;
-use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +17,7 @@ use App\Http\Controllers\PelangganController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -33,9 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('/tagihan', TagihanController::class) ->middleware(['auth', 'verified']);
-Route::resource('/produk', ProdukController::class) ->middleware(['auth', 'verified']);
-Route::resource('/pesanan', PesananController::class) ->middleware(['auth', 'verified']);
-Route::resource('/keranjang', KeranjangController::class) ->middleware(['auth', 'verified']);
+Route::resource('/product', ProductController::class) ->middleware(['auth', 'verified']);
+Route::resource('/order', OrderController::class) ->middleware(['auth', 'verified']);
+Route::get('/daftarinvoice', [OrderController::class, 'index'])->name('daftarinvoice');
+Route::get('/orderproduk', [OrderController::class, 'orderproduk'])->name('orderproduk');
+Route::get('/invoice/{id}', [OrderController::class, 'invoice'])->name('invoice');
+Route::get('/editinvoice/{id}', [OrderController::class, 'editinvoice'])->name('editinvoice');
+Route::post('/updateorder/{id}', [OrderController::class, 'updateorder'])->name('updateorder');
 
 require __DIR__.'/auth.php';

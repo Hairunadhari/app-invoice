@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pesanan;
+use App\Models\Orderitem;
 use Illuminate\Http\Request;
 
-class PesananController extends Controller
+class OrderitemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pesanan.index',[
-            'pesanan' => Pesanan::with('keranjang')->latest()->paginate(5),
-        ]);
+        //
     }
 
     /**
@@ -30,20 +28,13 @@ class PesananController extends Controller
      */
     public function store(Request $request)
     {
-        $keranjangIds = $request->input('keranjang_id');
-        foreach ($keranjangIds as $keranjangId) {
-            $validated = [
-                'keranjang_id' => $keranjangId,
-                ];
-                Pesanan::create($validated);
-        }
-        return redirect(route('pesanan.index'))->with(['success' => 'Produk dipesan!']);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Pesanan $pesanan)
+    public function show(Orderitem $orderitem)
     {
         //
     }
@@ -51,7 +42,7 @@ class PesananController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pesanan $pesanan)
+    public function edit(Orderitem $orderitem)
     {
         //
     }
@@ -59,7 +50,7 @@ class PesananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pesanan $pesanan)
+    public function update(Request $request, Orderitem $orderitem)
     {
         //
     }
@@ -67,7 +58,7 @@ class PesananController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pesanan $pesanan)
+    public function destroy(Orderitem $orderitem)
     {
         //
     }

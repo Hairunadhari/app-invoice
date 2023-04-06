@@ -22,11 +22,15 @@
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
+        "files": [
+            "app/Helper/fungsitambahan.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
+           
     },
     "autoload-dev": {
         "psr-4": {
@@ -62,6 +66,10 @@
             "php-http/discovery": true
         }
     },
+
+    
+    
     "minimum-stability": "stable",
     "prefer-stable": true
+    
 }

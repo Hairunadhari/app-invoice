@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tagihan;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
-class TagihanController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class TagihanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tagihan $tagihan)
+    public function show(Invoice $invoice)
     {
         //
     }
@@ -42,7 +42,7 @@ class TagihanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tagihan $tagihan)
+    public function edit(Invoice $invoice)
     {
         //
     }
@@ -50,7 +50,7 @@ class TagihanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tagihan $tagihan)
+    public function update(Request $request, Invoice $invoice)
     {
         //
     }
@@ -58,7 +58,7 @@ class TagihanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tagihan $tagihan)
+    public function destroy(Invoice $invoice)
     {
         //
     }

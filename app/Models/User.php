@@ -24,9 +24,12 @@ class User extends Authenticatable
         'level',
     ];
 
-    public function keranjang(){
-        return $this->hasMany(Keranjang::class);
+    public function order()
+    {
+        return $this->hasMany(Order::class);
     }
+
+    
 
     protected $hidden = [
         'password',

@@ -5,8 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pelanggan extends Model
+class Orderitem extends Model
 {
     use HasFactory;
-    protected $fillable = ['nama','telp'];
+    protected $guarded = [''];
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

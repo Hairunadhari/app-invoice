@@ -12,21 +12,17 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('produk.index')" :active="request()->routeIs('produk.index')">
+                    <x-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
                         {{ __('Daftar Produk') }}
                     </x-nav-link>
-                    @if (Auth::user()->level == 'admin')
-                    <x-nav-link :href="route('pesanan.index')" :active="request()->routeIs('pesanan.index')">
-                        {{ __('Daftar Pesanan') }}
+                    <x-nav-link :href="route('orderproduk')" :active="request()->routeIs('orderproduk')">
+                        {{ __('Order Produk') }}
                     </x-nav-link>
-                    @else
-                    <x-nav-link :href="route('keranjang.index')" :active="request()->routeIs('keranjang.index')">
-                        {{ __('Keranjang Saya') }}
+                    <x-nav-link :href="route('daftarinvoice')" :active="request()->routeIs('daftarinvoice')">
+                        {{ __('Daftar Invoice') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('pesanan.index')" :active="request()->routeIs('pesanan.index')">
-                        {{ __('Riwayat Pesanan') }}
-                    </x-nav-link>
-                    @endif
+                   
+
                 </div>
             </div>
 
@@ -35,7 +31,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>Admin</div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -87,8 +83,8 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-800">Admin</div>
+                <div class="font-medium text-sm text-gray-500">admin@gmail.com</div>
             </div>
 
             <div class="mt-3 space-y-1">

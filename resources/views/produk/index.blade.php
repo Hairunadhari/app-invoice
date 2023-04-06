@@ -8,11 +8,8 @@
 </style>
 
 <div class="container " style="margin-top: 10px;">
-    @if (Auth::user()->level == 'admin')
-    <a type="button" href="{{route('produk.create')}}" class="btn bg-success mb-3 text-white"
-        style="width:180px">+Tambah Produk</a>
-    @endif
-
+    <a type="button" class="btn bg-success text-white mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        style="width:150px">+Tambah Produk</a>
     <div class="card">
         <div class="card-body">
             <table class="table">
@@ -24,85 +21,76 @@
                 @endif
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Deskripsi</th>
-                        <th scope="col">Stock</th>
+                        {{-- <th scope="col">#</th>
+                        <th scope="col">Code</th> --}}
+                        <th scope="col">Nama Produk</th>
                         <th scope="col">Harga</th>
-                        <th scope="col">Pilih</th>
+                        <th scope="col">Stok</th>
+                        <th scope="col">Opsi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                    $no = 1;
-                    @endphp
-                    @forelse ($produk as $p)
+                    @forelse ($products as $product)
                     <tr>
-                        <td>{{$no++}}</td>
-                        <td>{{$p->nama}}</td>
-                        <td>{{$p->deskripsi}}</td>
-                        <td>{{$p->stock}}</td>
-                        <td>{{$p->harga}}</td>
-                        @if (Auth::user()->level == 'admin')
+                        {{-- <td><input type="checkbox" name="itemsid[]" value="{{$product->id}}"></td>
+                        <td>{{$product->code}}</td> --}}
+                        <td>{{$product->nama}}</td>
+                        <td>Rp.{{number_format($product->harga)}}</td>
+                        <td>{{$product->stok}}</td>
                         <td>
-                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                action="{{ route('produk.destroy', $p) }}" method="POST">
-                                <a href="{{ route('produk.edit', $p) }}" class="btn btn-sm btn-primary">EDIT</a>
+                            <form method="POST" action="{{ route('product.destroy', $product) }}">
+                                <a href="{{route('product.edit', $product)}}" class="btn bg-primary btm-sm">edit</a> |
                                 @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm text-white bg-danger">HAPUS</button>
+                                @method('delete')
+                                <button type="submit" class="btn btn-sm bg-danger">HAPUS</button>
                             </form>
                         </td>
-                        @else
-                        <td><button type="button" class="btn text-white bg-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{$p->id}}">[+] Keranjang</button></td>
-                        @endif
-                          </tr>
+                        
+                    </tr>
                     @empty
-                          <div class="alert alert-danger">
-                              Data Produk belum Tersedia.
-                          </div>
+                    <tr>Data Kosong</tr>
                     @endforelse
                 </tbody>
             </table>
-            <div class="row">{{ $produk->links() }}</div>
+            <div class="row">{{ $products->links() }} </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Input Produk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('product.store')}}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Nama</label>
+                        <input type="text" class="form-control" name="nama" required id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Harga</label>
+                        <input type="number" class="form-control" name="harga" required id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Stock</label>
+                        <input type="number" class="form-control" name="stok" required id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn text-white bg-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn text-white bg-primary">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
-@forelse ($produk as $p)
-<div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="{{route('keranjang.store')}}" method="post">
-        @csrf
-      <div class="modal-body">
-        <input type="hidden" class="form-control" name="produk_id" value="{{$p->id}}" id="exampleFormControlInput1">
-        <label for="">Nama Produk:</label>
-        <input type="text" class="form-control" value="{{old('nama', $p->nama)}}" id="exampleFormControlInput1"  required>
-        <label for="">Deskripsi:</label>
-        <textarea class="form-control" id="exampleFormControlInput1" required  rows="3">{{old('deskripsi', $p->deskripsi)}}</textarea>
-        <label for="">Stock:</label>
-        <input type="text" class="form-control" value="{{old('stock', $p->stock)}}"  id="exampleFormControlInput1"required>
-        <label for="">Harga:</label>
-        <input type="text" class="form-control" value="{{old('harga', $p->harga)}}"  id="exampleFormControlInput1"  required>
-        <label for="">Jumlah Pesan:</label>
-        <input type="number" class="form-control"  id="exampleFormControlInput1" name="jumlah_pesan" required>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn bg-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="submit" class="btn bg-primary">Pesan</button>
-      </div>
-    </form>
-
-    </div>
-  </div>
-</div>
-@empty
-@endforelse
 
 @endsection

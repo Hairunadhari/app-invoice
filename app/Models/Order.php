@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Keranjang extends Model
+class Order extends Model
 {
     use HasFactory;
     protected $guarded = [''];
@@ -14,14 +14,12 @@ class Keranjang extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function produk(){
-        return $this->belongsTo(Produk::class);
-    }
-
-    public function pesanan()
+    public function invoice()
     {
-        return $this->hasMany(Pesanan::class);
+        return $this->hasMany(Invoice::class);
+    }
+    public function orderitem()
+    {
+        return $this->hasMany(Orderitem::class);
     }
 }
-
